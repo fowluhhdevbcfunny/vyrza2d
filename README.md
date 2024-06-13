@@ -29,27 +29,27 @@ Make an index.html file with the following code:
 
 Then make a src/ folder and add 2 files: a copy of FowlJS as a javascript file, and a file called main.js. In the main.js file add this code:
 ```js
-import { Game, setClass } from "./fowljs.js";
+import { GameState, colors, setScene } from "./fowljs.js";
 
-class MainGame extends Game {
-  constructor(bgColor) {
-    super(bgColor);
-  }
+class Game extends GameState {
+    constructor(bgColor) {
+        super(bgColor);
+    }
 
-  gameInit() {
-    
-  }
+    init() {
 
-  gameUpdate() {
-    
-  }
+    }
 
-  gameDraw() {
+    update() {
 
-  }
+    }
+
+    draw() {
+
+    }
 }
 
-setClass(new MainGame("#777777"));
+setScene(new Game(colors.white));
 ```
 
 Then if you run the index.html file from earlier, you should see this:
