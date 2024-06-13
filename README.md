@@ -21,7 +21,7 @@ Make an index.html file with the following code:
     }
 </style>
 <body>
-    <canvas id="app" width="640" height="480"></canvas>
+    <canvas oncontextmenu="return false;" id="app" width="640" height="480"></canvas>
     <script src="src/main.js" type="module"></script>
 </body>
 </html>
