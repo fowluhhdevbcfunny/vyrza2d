@@ -21,8 +21,8 @@ export var colors = {
     fushcia:   "#CCCCFF"
 }
 
-// base game class
-export class Game {
+// base gamestate class
+export class GameState {
     constructor(bgColor) {
         this.canvas = document.querySelector("#app");
         this.ctx = this.canvas.getContext("2d");
@@ -82,10 +82,12 @@ export class Game {
             2: {down: false},
         }
 
-        this.init();
+        this.manager = null;
+
+        this.baseInit();
     }
 
-    init() {
+    baseInit() {
         // get keys down and bind them to controller
         window.addEventListener("keydown", (e) => {
             if (this.controller[e.key]) {
@@ -112,42 +114,57 @@ export class Game {
             }
         });
 
-        this.gameInit();
+        this.init();
     }
 
-    // game function
-    gameInit() {
-        return;
+    init() {
+        
     }
 
-    draw() {
+    baseDraw() {
         this.ctx.fillStyle = this.bgColor;
         this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
 
-        this.gameDraw();
-    
+        this.draw();
     }
 
-    // game function
-    gameDraw() {
-        return;
+    draw() {
+
+    }
+
+    baseUpdate() {
+        this.update();
     }
 
     update() {
-        this.gameUpdate();
-    }
 
-    // game function
-    gameUpdate() {
-        return;
     }
 }
 
-let gameClass;
+// the scene manager
+class SceneManager {
+    constructor() {
+        
+    }
+
+    start(starting_scene) {
+        this.go_to(starting_scene);
+    }
+
+    go_to(scene) {
+        this.scene = scene;
+        this.scene.manager = this;
+    }
+}
+
+// stuff related to initializing the game
+var starting_scene;
+var manager = new SceneManager();
 
 // sets the class since you cant in the game script
-export function setClass(x) {
-    gameClass = x;
+export function setScene(x) {
+    starting_scene = x;
+    manager.start(starting_scene);
 }
 
 // drawing
@@ -170,7 +187,7 @@ export function drawText(text,x,y,col,font,ctx) {
 
 // updating and delta time
 let now;
-let then = performance.now()
+let then = performance.now();
 
 function gameLoop() {
   let interval = 1000 / 60;
@@ -181,8 +198,8 @@ function gameLoop() {
   if (delta > interval) {
     then = now - (delta % interval);
 
-    gameClass.update();
-    gameClass.draw();
+    manager.scene.baseUpdate();
+    manager.scene.baseDraw();
   }
 
   requestAnimationFrame(gameLoop);
