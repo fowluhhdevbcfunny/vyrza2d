@@ -1,3 +1,6 @@
+// FowlJS code, do not modify unless you know what you're doing!
+
+// colors
 export var colors = {
     white:   "#FFFFFF",
     silver:  "#CCCCCC",
@@ -14,14 +17,15 @@ export var colors = {
     fushcia: "#CCCCFF"
 }
 
-
+// base game class
 export class Game {
     constructor(bgColor) {
         this.canvas = document.querySelector("#app");
         this.ctx = this.canvas.getContext("2d");
     
         this.bgColor = bgColor;
-
+        
+        // controller allows input
         this.controller = {
             "ArrowLeft": {down: false},
             "ArrowRight": {down: false},
@@ -72,12 +76,14 @@ export class Game {
     }
 
     init() {
+        // get keys down and bind them to controller
         window.addEventListener("keydown", (e) => {
             if (this.controller[e.key]) {
                 this.controller[e.key].down = true;
             }
         });
 
+        // remove keys when up
         window.addEventListener("keyup", (e) => {
             if (this.controller[e.key]) {
                 this.controller[e.key].down = false;
@@ -87,6 +93,7 @@ export class Game {
         this.gameInit();
     }
 
+    // game function
     gameInit() {
         return;
     }
@@ -96,8 +103,10 @@ export class Game {
         this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
 
         this.gameDraw();
+    
     }
 
+    // game function
     gameDraw() {
         return;
     }
@@ -106,6 +115,7 @@ export class Game {
         this.gameUpdate();
     }
 
+    // game function
     gameUpdate() {
         return;
     }
@@ -113,10 +123,12 @@ export class Game {
 
 let gameClass;
 
+// sets the class since you cant in the game script
 export function setClass(x) {
     gameClass = x;
 }
 
+// drawing
 export function drawRectangle(x,y,w,h,col,ctx) {
     ctx.fillStyle = col;
     ctx.fillRect(x,y,w,h);
@@ -133,8 +145,8 @@ export function drawText(text,x,y,col,font,ctx) {
     ctx.font = font;
     ctx.fillText(text,x,y);
 }
-  
 
+// updating and delta time
 let now;
 let then = Date.now();
 let delta;
