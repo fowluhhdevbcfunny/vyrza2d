@@ -1,20 +1,24 @@
 // FowlJS code, do not modify unless you know what you're doing!
 
+// declares the delta
+let delta;
+
 // colors
 export var colors = {
-    white:   "#FFFFFF",
-    silver:  "#CCCCCC",
-    gray:    "#777777",
-    black:   "#222222",
-    red:     "#DE3163",
-    orange:  "#FF7F50",
-    yorange: "#FFBF00",
-    yellow:  "#FFDF00",
-    green:   "#9FE2BF",
-    teal:    "#40E0D0",
-    fowl:    "#0085FF",
-    blue:    "#6495ED",
-    fushcia: "#CCCCFF"
+    white:     "#FFFFFF",
+    silver:    "#CCCCCC",
+    gray:      "#777777",
+    black:     "#222222",
+    red:       "#DE3163",
+    orange:    "#FF7F50",
+    yorange:   "#FFBF00",
+    yellow:    "#FFDF00",
+    green:     "#9FE2BF",
+    darkgreen: "#22AB63",
+    teal:      "#40E0D0",
+    fowl:      "#0085FF",
+    blue:      "#6495ED",
+    fushcia:   "#CCCCFF"
 }
 
 // base game class
@@ -72,6 +76,12 @@ export class Game {
             "0": {down: false},
         };
 
+        this.mouseController = {
+            0: {down: false},
+            1: {down: false},
+            2: {down: false},
+        }
+
         this.init();
     }
 
@@ -87,6 +97,18 @@ export class Game {
         window.addEventListener("keyup", (e) => {
             if (this.controller[e.key]) {
                 this.controller[e.key].down = false;
+            }
+        });
+
+        window.addEventListener("mousedown", (e) => {
+            if (this.mouseController[e.button]) {
+                this.mouseController[e.button].down = true;
+            }
+        });
+
+        window.addEventListener("mouseup", (e) => {
+            if (this.mouseController[e.button]) {
+                this.mouseController[e.button].down = false;
             }
         });
 
@@ -148,13 +170,12 @@ export function drawText(text,x,y,col,font,ctx) {
 
 // updating and delta time
 let now;
-let then = Date.now();
-let delta;
+let then = performance.now()
 
 function gameLoop() {
   let interval = 1000 / 60;
 
-  now = Date.now();
+  now = performance.now()
   delta = now - then;
 
   if (delta > interval) {
