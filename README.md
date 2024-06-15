@@ -2,8 +2,6 @@
 
 Game framework built in vanilla JavaScript.
 
-
-
 ### HOW TO USE
 
 You can get the template here: 
