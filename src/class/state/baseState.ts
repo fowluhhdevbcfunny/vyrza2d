@@ -46,13 +46,13 @@ export class BaseState {
       }
     });
 
-    window.addEventListener("mousedown", (e) => {
+    window.addEventListener("pointerdown", (e) => {
       if (mouseController[e.button]) {
         mouseController[e.button].down = true;
       }
     });
 
-    window.addEventListener("mouseup", (e) => {
+    window.addEventListener("pointerup", (e) => {
       if (mouseController[e.button]) {
         mouseController[e.button].down = false;
       }
