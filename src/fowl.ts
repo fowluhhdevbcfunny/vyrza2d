@@ -21,9 +21,10 @@ import { CollisionSides } from "./const/collisionSides";
 import { colors } from "./const/colors";
 import { type Controller, controller } from "./const/controller";
 import { getCollision, getCollisionSide } from "./func/collision";
-import { getKeys } from "./func/getKeys";
+import { getKeys, getMouseKeys } from "./func/getKeys";
 import { startGame } from "./func/startGame";
 import { type BaseObject, type BaseObjectPos } from "./type/object";
+import { Camera } from "./class/drawing/camera";
 
 declare global {
   interface Window {
@@ -37,6 +38,7 @@ declare global {
 export {
   Music,
   Sound,
+  Camera,
   Font,
   Group,
   LineShape,
@@ -60,6 +62,7 @@ export {
   getCollision,
   getCollisionSide,
   getKeys,
+  getMouseKeys,
   startGame,
   type BaseObject,
   type BaseObjectPos,

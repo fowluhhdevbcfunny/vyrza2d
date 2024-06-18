@@ -4,16 +4,18 @@ export class SlicedSprite {
   img: HTMLImageElement;
   x: any;
   y: any;
+  w: any;
+  h: any;
   sx: any;
   sy: any;
   sw: any;
   sh: any;
-  w!: number;
-  h!: number;
   constructor(
     src: any,
     x: any,
     y: any,
+    w: any,
+    h: any,
     sx: any,
     sy: any,
     sw: any,
@@ -25,6 +27,8 @@ export class SlicedSprite {
     this.img = new Image();
     this.x = x;
     this.y = y;
+    this.w = w;
+    this.h = h;
     this.sx = sx;
     this.sy = sy;
     this.sw = sw;
@@ -33,8 +37,6 @@ export class SlicedSprite {
 
   draw() {
     this.img.src = this.src;
-    this.w = this.img.width * this.scale;
-    this.h = this.img.height * this.scale;
     window.ctx.drawImage(
       this.img,
       this.sx,
@@ -43,8 +45,8 @@ export class SlicedSprite {
       this.sh,
       this.x,
       this.y,
-      this.w,
-      this.h
+      this.w*this.scale,
+      this.h*this.scale
     );
   }
 }

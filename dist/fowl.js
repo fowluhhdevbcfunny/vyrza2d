@@ -231,18 +231,20 @@ class SlicedSprite {
   img;
   x;
   y;
+  w;
+  h;
   sx;
   sy;
   sw;
   sh;
-  w;
-  h;
-  constructor(src, x, y, sx, sy, sw, sh, scale = 1) {
+  constructor(src, x, y, w, h, sx, sy, sw, sh, scale = 1) {
     this.src = src;
     this.scale = scale;
     this.img = new Image;
     this.x = x;
     this.y = y;
+    this.w = w;
+    this.h = h;
     this.sx = sx;
     this.sy = sy;
     this.sw = sw;
@@ -250,9 +252,7 @@ class SlicedSprite {
   }
   draw() {
     this.img.src = this.src;
-    this.w = this.img.width * this.scale;
-    this.h = this.img.height * this.scale;
-    window.ctx.drawImage(this.img, this.sx, this.sy, this.sw, this.sh, this.x, this.y, this.w, this.h);
+    window.ctx.drawImage(this.img, this.sx, this.sy, this.sw, this.sh, this.x, this.y, this.w * this.scale, this.h * this.scale);
   }
 }
 
@@ -471,6 +471,46 @@ var controller = {
   "=": { down: false }
 };
 
+// src/const/mouse.ts
+var mouseController = {
+  0: { down: false },
+  1: { down: false },
+  2: { down: false }
+};
+
+// src/class/drawing/camera.ts
+class Camera {
+  x;
+  y;
+  lastX;
+  lastY;
+  lock = false;
+  lockObject;
+  constructor(x = 0, y = 0) {
+    this.x = x;
+    this.y = y;
+  }
+  draw() {
+    window.ctx.resetTransform();
+    if (this.lock) {
+      window.ctx.translate(-(this.lockObject.x + this.lockObject.w / 2 - canvas().width / 2), -(this.lockObject.y + this.lockObject.h / 2 - canvas().height / 2));
+    } else {
+      window.ctx.translate(-this.x, -this.y);
+    }
+  }
+  follow(object) {
+    this.lastX = this.x;
+    this.lastY = this.y;
+    this.lockObject = object;
+    this.lock = true;
+  }
+  unfollow() {
+    this.x = this.lastX;
+    this.y = this.lastY;
+    this.lock = false;
+  }
+}
+
 // src/class/state/baseState.ts
 class BaseState {
   constructor() {
@@ -490,6 +530,7 @@ class BaseState {
   }
   bg;
   bgColor;
+  camera;
   preCreate() {
     this.bgColor = "#FFFFFF";
     window.addEventListener("keydown", (e) => {
@@ -502,9 +543,21 @@ class BaseState {
         controller[e.key].down = false;
       }
     });
+    window.addEventListener("mousedown", (e) => {
+      if (mouseController[e.button]) {
+        mouseController[e.button].down = true;
+      }
+    });
+    window.addEventListener("mouseup", (e) => {
+      if (mouseController[e.button]) {
+        mouseController[e.button].down = false;
+      }
+    });
     this.objects = {};
+    this.camera = new Camera;
     this.bg = new RectangleShape(-1e4, -1e4, 1e4 + canvas().width, 1e4 + canvas().height, this.bgColor);
     this.add(this.bg, "default-background");
+    this.add(this.camera, "default-camera");
     this.create();
   }
   create() {
@@ -533,6 +586,15 @@ class BaseState {
   }
   getPreload(name) {
     return this.preloads[name];
+  }
+  resetState() {
+    for (var v in this.objects) {
+      delete this.objects[v];
+    }
+    for (var v in this.preloads) {
+      delete this.preloads[v];
+    }
+    this.prePreload();
   }
 }
 
@@ -571,6 +633,9 @@ var colors = {
 function getKeys(keys) {
   return keys.some((key) => controller[key].down == true);
 }
+function getMouseKeys(keys) {
+  return keys.some((key) => mouseController[key].down == true);
+}
 
 // src/func/startGame.ts
 function startGame(defaultScene) {
@@ -578,6 +643,7 @@ function startGame(defaultScene) {
 }
 export {
   startGame,
+  getMouseKeys,
   getManager,
   getKeys,
   getCollisionSide,
@@ -601,5 +667,6 @@ export {
   Group,
   Font,
   CollisionSides,
+  Camera,
   BaseState
 };

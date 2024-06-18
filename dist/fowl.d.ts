@@ -17,6 +17,18 @@ export type BaseObjectPos = {
 	x: number;
 	y: number;
 };
+export declare class Camera {
+	x: any;
+	y: any;
+	lastX: any;
+	lastY: any;
+	lock: boolean;
+	lockObject: any;
+	constructor(x?: any, y?: any);
+	draw(): void;
+	follow(object: any): void;
+	unfollow(): void;
+}
 export declare class BaseState {
 	constructor();
 	manager: StateManager;
@@ -27,6 +39,7 @@ export declare class BaseState {
 	finishPreload(): void;
 	bg: RectangleShape;
 	bgColor: string;
+	camera: Camera;
 	preCreate(): void;
 	create(): void;
 	preUpdate(delta: number): void;
@@ -35,6 +48,7 @@ export declare class BaseState {
 	remove(name: string | number, callback?: () => void): void;
 	addPreload(name: string, data: any): void;
 	getPreload(name: string): any;
+	resetState(): void;
 }
 export declare class StateManager {
 	scene: BaseState;
@@ -125,13 +139,13 @@ export declare class SlicedSprite {
 	img: HTMLImageElement;
 	x: any;
 	y: any;
+	w: any;
+	h: any;
 	sx: any;
 	sy: any;
 	sw: any;
 	sh: any;
-	w: number;
-	h: number;
-	constructor(src: any, x: any, y: any, sx: any, sy: any, sw: any, sh: any, scale?: number);
+	constructor(src: any, x: any, y: any, w: any, h: any, sx: any, sy: any, sw: any, sh: any, scale?: number);
 	draw(): void;
 }
 export declare class TextLabel {
@@ -219,6 +233,7 @@ export declare function getCollisionSide(obj1: {
 	y: number;
 }): CollisionSides | undefined;
 export declare function getKeys(keys: any[]): boolean;
+export declare function getMouseKeys(keys: any[]): boolean;
 export declare function startGame(defaultScene: BaseState): void;
 
 export {

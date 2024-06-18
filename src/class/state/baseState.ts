@@ -3,6 +3,8 @@ import { controller } from "../../const/controller";
 import { RectangleShape } from "../drawing/rectangle";
 import type { BaseObject } from "../../type/object";
 import type { StateManager } from "./stateManager";
+import { mouseController } from "../../const/mouse";
+import { Camera } from "../drawing/camera";
 
 export class BaseState {
   constructor() {
@@ -27,6 +29,8 @@ export class BaseState {
   bg!: RectangleShape;
   bgColor!: string;
 
+  camera!: Camera;
+
   preCreate() {
     this.bgColor = "#FFFFFF";
 
@@ -42,7 +46,21 @@ export class BaseState {
       }
     });
 
+    window.addEventListener("mousedown", (e) => {
+      if (mouseController[e.button]) {
+        mouseController[e.button].down = true;
+      }
+    });
+
+    window.addEventListener("mouseup", (e) => {
+      if (mouseController[e.button]) {
+        mouseController[e.button].down = false;
+      }
+    });
+
     this.objects = {};
+
+    this.camera = new Camera();
 
     this.bg = new RectangleShape(
       -10000,
@@ -53,6 +71,7 @@ export class BaseState {
     );
 
     this.add(this.bg, "default-background");
+    this.add(this.camera, "default-camera");
     this.create();
   }
 
@@ -84,5 +103,15 @@ export class BaseState {
 
   getPreload(name: string) {
     return this.preloads[name];
+  }
+
+  resetState() {
+    for (var v in this.objects){
+      delete this.objects[v];
+    }
+    for (var v in this.preloads){
+      delete this.preloads[v];
+    }
+    this.prePreload();
   }
 }

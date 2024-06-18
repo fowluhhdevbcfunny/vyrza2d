@@ -15,4 +15,4 @@ You can get the template here: [FowlJS Template](https://github.com/fowluhhdevbc
 
 - FowluhhDevBCFunny
 - Me1ad
-- Kat21 (for the typescript port)
+- Kat21
