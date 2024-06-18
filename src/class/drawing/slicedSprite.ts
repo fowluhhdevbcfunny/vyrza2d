@@ -1,7 +1,3 @@
-import { ctx } from "../../const/ctx";
-
-const context = ctx();
-
 export class SlicedSprite {
   src: any;
   scale: number;
@@ -39,7 +35,7 @@ export class SlicedSprite {
     this.img.src = this.src;
     this.w = this.img.width * this.scale;
     this.h = this.img.height * this.scale;
-    context.drawImage(
+    window.ctx.drawImage(
       this.img,
       this.sx,
       this.sy,

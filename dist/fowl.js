@@ -1,1 +1,605 @@
-class u{source;audio;ready;constructor(E){this.source=E,this.ready=!1,this.audio=new Audio(this.source),this.audio.load(),this.audio.onload=()=>{this.ready=!0}}play(E){if(this.ready||E)this.audio.play()}stop(){this.audio.pause(),this.audio.fastSeek(0)}}class w{source;constructor(E){this.source=E}play(){var E=new Audio(this.source);E.play()}}class h{size;name;constructor(E=24,F="serif"){this.size=E,this.name=F}getMerged(){return this.size.toString()+"px "+this.name}getSize(){return this.size}getName(){return this.name}}class I{objects;x;y;constructor(E=0,F=0){this.objects={},this.x=E,this.y=F}draw(){for(let E in this.objects)this.objects[E].x+=this.x,this.objects[E].y+=this.y,this.objects[E].draw(),this.objects[E].x-=this.x,this.objects[E].y-=this.y}add(E,F,q=()=>{}){q(),this.objects[F]=E}remove(E,F=()=>{}){F(),delete this.objects[E]}get(E){return this.objects[E]}}var J=()=>window.ctx;var Z=J();class Y{point1;point2;width;color;constructor(E,F,q,B){this.point1=E,this.point2=F,this.width=q,this.color=B}draw(){Z.beginPath(),Z.moveTo(this.point1.x,this.point1.y),Z.lineTo(this.point2.x,this.point2.y),Z.lineWidth=this.width,Z.strokeStyle=this.color,Z.stroke()}}var P=J();class X{x;y;w;h;color;outline_color;outline_width;constructor(E,F,q,B,A,N,V){this.x=E,this.y=F,this.w=q,this.h=B,this.color=A,this.outline_color=N,this.outline_width=V}draw(){P.fillStyle=this.outline_color,P.fillRect(this.x,this.y,this.w+this.outline_width,this.h+this.outline_width),P.fillStyle=this.color,P.fillRect(this.x+this.outline_width,this.y+this.outline_width,this.w-this.outline_width,this.h-this.outline_width)}}var $=J();class g{x;y;font;color;text;outline_color;outline_width;constructor(E,F,q,B,A,N,V){this.x=F,this.y=q,this.font=V,this.color=B,this.text=E,this.outline_color=A,this.outline_width=N}draw(){$.fillStyle=this.color,$.font=this.font.getMerged(),$.strokeStyle=this.outline_color,$.lineWidth=this.outline_width*2,$.strokeText(this.text,this.x,this.y+(this.font.getSize()-10)),$.fillText(this.text,this.x,this.y+(this.font.getSize()-10))}}var C=J();class z{x;y;w;h;color;constructor(E,F,q,B,A){this.x=E,this.y=F,this.w=q,this.h=B,this.color=A}draw(){C.fillStyle=this.color,C.fillRect(this.x,this.y,this.w,this.h)}}var i=J();class S{src;scale;img;x;y;sx;sy;sw;sh;w;h;constructor(E,F,q,B,A,N,V,W=1){this.src=E,this.scale=W,this.img=new Image,this.x=F,this.y=q,this.sx=B,this.sy=A,this.sw=N,this.sh=V}draw(){this.img.src=this.src,this.w=this.img.width*this.scale,this.h=this.img.height*this.scale,i.drawImage(this.img,this.sx,this.sy,this.sw,this.sh,this.x,this.y,this.w,this.h)}}var c=J();class K{src;scale;img;x;y;w;h;constructor(E,F,q,B=1){this.src=E,this.scale=B,this.img=new Image,this.x=F,this.y=q}draw(){this.img.src=this.src,this.w=this.img.width*this.scale,this.h=this.img.height*this.scale,c.drawImage(this.img,this.x,this.y,this.w,this.h)}}class y{x;y;font;color;text;constructor(E,F,q,B,A){this.x=F,this.y=q,this.font=A,this.color=B,this.text=E}draw(){J().fillStyle=this.color,J().font=this.font.getMerged(),J().fillText(this.text,this.x,this.y+(this.font.getSize()-10))}}var Q;(function(A){A[A["TOP"]=0]="TOP";A[A["BOTTOM"]=1]="BOTTOM";A[A["LEFT"]=2]="LEFT";A[A["RIGHT"]=3]="RIGHT"})(Q||(Q={}));function O(E,F){if(E.x<F.x+F.w&&E.x+E.w>F.x&&E.y<F.y+F.h&&E.y+E.h>F.y)return!0;else return!1}function n(E,F){if(O(E,F)){var q=E.w/2,B=E.h/2,A=F.w/2,N=F.h/2,V=E.x+E.w/2,W=E.y+E.h/2,s=F.x+F.w/2,a=F.y+F.h/2,G=V-s,M=W-a,k=q+A,m=B+N,v=G>0?k-G:-k-G,D=M>0?m-M:-m-M;if(v!=0&&D!=0)if(Math.abs(v)<Math.abs(D))if(v>0)return Q.LEFT;else return Q.RIGHT;else if(D>0)return Q.BOTTOM;else return Q.TOP}}class T{x;w;y;h;constructor(E,F,q,B){this.x=E,this.y=F,this.w=q,this.h=B}}class p{data;offsetX;offsetY;tileSize;tilePaths;constructor(E,F,q=0,B=0){this.data=E,this.offsetX=q,this.offsetY=B,this.tileSize=F,this.tilePaths=[]}addTile(E){this.tilePaths.push(E)}draw(){var E=new I;for(let q=0;q<this.data.length;q++){const B=this.data[q];for(let A=0;A<B.length;A++){const N=this.data[q][A];var F=new K(this.tilePaths[N],this.offsetX+A*this.tileSize,this.offsetY+q*this.tileSize);E.add(F,`t${q},${A}`)}}E.draw()}getCollision(E,F,q){return O(E,new T(F*this.tileSize+this.offsetX,q*this.tileSize+this.offsetY,this.tileSize,this.tileSize))}}class f{x;y;constructor(E,F){this.x=E,this.y=F}}var L=()=>document.querySelector("#app");var U={ArrowUp:{down:!1},ArrowDown:{down:!1},ArrowLeft:{down:!1},ArrowRight:{down:!1},Enter:{down:!1},Shift:{down:!1},Control:{down:!1},Escape:{down:!1}," ":{down:!1},q:{down:!1},w:{down:!1},e:{down:!1},r:{down:!1},t:{down:!1},y:{down:!1},u:{down:!1},i:{down:!1},o:{down:!1},p:{down:!1},a:{down:!1},s:{down:!1},d:{down:!1},f:{down:!1},g:{down:!1},h:{down:!1},j:{down:!1},k:{down:!1},l:{down:!1},z:{down:!1},x:{down:!1},c:{down:!1},v:{down:!1},b:{down:!1},n:{down:!1},m:{down:!1},"1":{down:!1},"2":{down:!1},"3":{down:!1},"4":{down:!1},"5":{down:!1},"6":{down:!1},"7":{down:!1},"8":{down:!1},"9":{down:!1},"0":{down:!1},",":{down:!1},".":{down:!1},"/":{down:!1},";":{down:!1},"'":{down:!1},"[":{down:!1},"]":{down:!1},"-":{down:!1},"=":{down:!1}};class d{constructor(){this.prePreload()}manager;preloads;objects;async prePreload(){this.preloads={},await this.preload()}async preload(){}finishPreload(){this.preCreate()}bg;bgColor;preCreate(){this.bgColor="#FFFFFF",window.addEventListener("keydown",(E)=>{if(U[E.key])U[E.key].down=!0}),window.addEventListener("keyup",(E)=>{if(U[E.key])U[E.key].down=!1}),this.objects={},this.bg=new z(-1e4,-1e4,1e4+L().width,1e4+L().height,this.bgColor),this.add(this.bg,"default-background"),this.create()}create(){}preUpdate(E){this.bg.color=this.bgColor;for(let F in this.objects)this.objects[F].draw();this.update(E)}update(E){}add(E,F,q=()=>{}){q(),this.objects[F]=E}remove(E,F=()=>{}){F(),delete this.objects[E]}addPreload(E,F){this.preloads[E]=F}getPreload(E){return this.preloads[E]}}class _{scene;constructor(){}switch(E){this.scene=E,this.scene.manager=this}}var l={white:"#FFFFFF",silver:"#CCCCCC",gray:"#777777",black:"#000000",red:"#DE3163",candyAppleRed:"#E6192E",orange:"#FF7F50",yellowOrange:"#FFBF00",yellow:"#FFDF00",gold:"#E8E84A",lemon:"#CCCC77",yellowGreen:"#9DD62B",lime:"#77CC77",green:"#9FE2BF",darkGreen:"#22AB63",teal:"#40E0D0",skyBlue:"#00BBFF",fowl:"#0085FF",blue:"#6495ED",deepBlue:"#15158A",violet:"#4A2AE8",purple:"#8128D4",fuchsia:"#CCCCFF",hotPink:"#DB2162",fullRed:"#FF0000",fullGreen:"#00FF00",fullBlue:"#0000FF"};function t(E){return E.some((F)=>U[F].down==!0)}function e(E){x().switch(E)}function x(){return j}var b=function(){let E=16.666666666666668;if(H=performance.now(),R=H-r,R>E)r=H-R%E,j.scene.preUpdate(R);requestAnimationFrame(b)},o=document.querySelector("#app"),E0=o.getContext("2d");window.ctx=E0;var j=new _;var H,r=performance.now(),R;requestAnimationFrame(b);export{e as startGame,x as getManager,t as getKeys,J as getContext,n as getCollisionSide,O as getCollision,L as getCanvas,U as controller,l as colors,p as TileMap,y as TextLabel,_ as StateManager,K as Sprite,w as Sound,S as SlicedSprite,z as RectangleShape,T as Rect,f as Point,g as OutlinedTextLabel,X as OutlinedRectangleShape,u as Music,Y as LineShape,I as Group,h as Font,Q as CollisionSides,d as BaseState};
+// src/class/state/stateManager.ts
+class StateManager {
+  scene;
+  constructor() {
+  }
+  switch(scene) {
+    this.scene = scene;
+    this.scene.manager = this;
+  }
+}
+
+// src/func/init.ts
+function initEngine(baseScene) {
+  let canvas = document.querySelector("#app");
+  let ctx = canvas.getContext("2d");
+  window.ctx = ctx;
+  let manager = new StateManager;
+  window.manager = manager;
+  manager.switch(baseScene);
+  let now;
+  let then = performance.now();
+  let delta;
+  function gameLoop() {
+    let interval = 16.666666666666668;
+    now = performance.now();
+    delta = now - then;
+    if (delta > interval) {
+      then = now - delta % interval;
+      if (manager.scene === undefined)
+        alert("BAD");
+      else
+        manager.scene.preUpdate(delta);
+    }
+    requestAnimationFrame(gameLoop);
+  }
+  requestAnimationFrame(gameLoop);
+}
+function getManager() {
+  return window.manager;
+}
+
+// src/class/audio/music.ts
+class Music {
+  source;
+  audio;
+  ready;
+  constructor(source) {
+    this.source = source;
+    this.ready = false;
+    this.audio = new Audio(this.source);
+    this.audio.load();
+    this.audio.onload = () => {
+      this.ready = true;
+    };
+  }
+  play(force) {
+    if (this.ready || force)
+      this.audio.play();
+  }
+  stop() {
+    this.audio.pause();
+    this.audio.fastSeek(0);
+  }
+}
+
+// src/class/audio/sound.ts
+class Sound {
+  source;
+  constructor(source) {
+    this.source = source;
+  }
+  play() {
+    var audio = new Audio(this.source);
+    audio.play();
+  }
+}
+
+// src/class/drawing/font.ts
+class Font {
+  size;
+  name;
+  constructor(size = 24, name = "serif") {
+    this.size = size;
+    this.name = name;
+  }
+  getMerged() {
+    return this.size.toString() + "px " + this.name;
+  }
+  getSize() {
+    return this.size;
+  }
+  getName() {
+    return this.name;
+  }
+}
+
+// src/class/drawing/group.ts
+class Group {
+  objects;
+  x;
+  y;
+  constructor(x = 0, y = 0) {
+    this.objects = {};
+    this.x = x;
+    this.y = y;
+  }
+  draw() {
+    for (let key in this.objects) {
+      this.objects[key].x += this.x;
+      this.objects[key].y += this.y;
+      this.objects[key].draw();
+      this.objects[key].x -= this.x;
+      this.objects[key].y -= this.y;
+    }
+  }
+  add(object, name, callback = () => {
+  }) {
+    callback();
+    this.objects[name] = object;
+  }
+  remove(name, callback = () => {
+  }) {
+    callback();
+    delete this.objects[name];
+  }
+  get(name) {
+    return this.objects[name];
+  }
+}
+
+// src/class/drawing/line.ts
+class LineShape {
+  point1;
+  point2;
+  width;
+  color;
+  constructor(point1, point2, width, color) {
+    this.point1 = point1;
+    this.point2 = point2;
+    this.width = width;
+    this.color = color;
+  }
+  draw() {
+    window.ctx.beginPath();
+    window.ctx.moveTo(this.point1.x, this.point1.y);
+    window.ctx.lineTo(this.point2.x, this.point2.y);
+    window.ctx.lineWidth = this.width;
+    window.ctx.strokeStyle = this.color;
+    window.ctx.stroke();
+  }
+}
+
+// src/class/drawing/outlinedRectangle.ts
+class OutlinedRectangleShape {
+  x;
+  y;
+  w;
+  h;
+  color;
+  outline_color;
+  outline_width;
+  constructor(x, y, w, h, color, outline_color, outline_width) {
+    this.x = x;
+    this.y = y;
+    this.w = w;
+    this.h = h;
+    this.color = color;
+    this.outline_color = outline_color;
+    this.outline_width = outline_width;
+  }
+  draw() {
+    window.ctx.fillStyle = this.outline_color;
+    window.ctx.fillRect(this.x, this.y, this.w + this.outline_width, this.h + this.outline_width);
+    window.ctx.fillStyle = this.color;
+    window.ctx.fillRect(this.x + this.outline_width, this.y + this.outline_width, this.w - this.outline_width, this.h - this.outline_width);
+  }
+}
+
+// src/class/drawing/outlineText.ts
+class OutlinedTextLabel {
+  x;
+  y;
+  font;
+  color;
+  text;
+  outline_color;
+  outline_width;
+  constructor(text, x, y, color, outline_color, outline_width, font) {
+    this.x = x;
+    this.y = y;
+    this.font = font;
+    this.color = color;
+    this.text = text;
+    this.outline_color = outline_color;
+    this.outline_width = outline_width;
+  }
+  draw() {
+    window.ctx.fillStyle = this.color;
+    window.ctx.font = this.font.getMerged();
+    window.ctx.strokeStyle = this.outline_color;
+    window.ctx.lineWidth = this.outline_width * 2;
+    window.ctx.strokeText(this.text, this.x, this.y + (this.font.getSize() - 10));
+    window.ctx.fillText(this.text, this.x, this.y + (this.font.getSize() - 10));
+  }
+}
+
+// src/class/drawing/rectangle.ts
+class RectangleShape {
+  x;
+  y;
+  w;
+  h;
+  color;
+  constructor(x, y, w, h, color) {
+    this.x = x;
+    this.y = y;
+    this.w = w;
+    this.h = h;
+    this.color = color;
+  }
+  draw() {
+    window.ctx.fillStyle = this.color;
+    window.ctx.fillRect(this.x, this.y, this.w, this.h);
+  }
+}
+
+// src/class/drawing/slicedSprite.ts
+class SlicedSprite {
+  src;
+  scale;
+  img;
+  x;
+  y;
+  sx;
+  sy;
+  sw;
+  sh;
+  w;
+  h;
+  constructor(src, x, y, sx, sy, sw, sh, scale = 1) {
+    this.src = src;
+    this.scale = scale;
+    this.img = new Image;
+    this.x = x;
+    this.y = y;
+    this.sx = sx;
+    this.sy = sy;
+    this.sw = sw;
+    this.sh = sh;
+  }
+  draw() {
+    this.img.src = this.src;
+    this.w = this.img.width * this.scale;
+    this.h = this.img.height * this.scale;
+    window.ctx.drawImage(this.img, this.sx, this.sy, this.sw, this.sh, this.x, this.y, this.w, this.h);
+  }
+}
+
+// src/class/drawing/sprite.ts
+class Sprite {
+  src;
+  scale;
+  img;
+  x;
+  y;
+  w;
+  h;
+  constructor(src, x, y, scale = 1) {
+    this.src = src;
+    this.scale = scale;
+    this.img = new Image;
+    this.x = x;
+    this.y = y;
+  }
+  draw() {
+    this.img.src = this.src;
+    this.w = this.img.width * this.scale;
+    this.h = this.img.height * this.scale;
+    window.ctx.drawImage(this.img, this.x, this.y, this.w, this.h);
+  }
+}
+
+// src/class/drawing/text.ts
+class TextLabel {
+  x;
+  y;
+  font;
+  color;
+  text;
+  constructor(text, x, y, color, font) {
+    this.x = x;
+    this.y = y;
+    this.font = font;
+    this.color = color;
+    this.text = text;
+  }
+  draw() {
+    window.ctx.fillStyle = this.color;
+    window.ctx.font = this.font.getMerged();
+    window.ctx.fillText(this.text, this.x, this.y + (this.font.getSize() - 10));
+  }
+}
+
+// src/const/collisionSides.ts
+var CollisionSides;
+(function(CollisionSides2) {
+  CollisionSides2[CollisionSides2["TOP"] = 0] = "TOP";
+  CollisionSides2[CollisionSides2["BOTTOM"] = 1] = "BOTTOM";
+  CollisionSides2[CollisionSides2["LEFT"] = 2] = "LEFT";
+  CollisionSides2[CollisionSides2["RIGHT"] = 3] = "RIGHT";
+})(CollisionSides || (CollisionSides = {}));
+
+// src/func/collision.ts
+function getCollision(obj1, obj2) {
+  if (obj1.x < obj2.x + obj2.w && obj1.x + obj1.w > obj2.x && obj1.y < obj2.y + obj2.h && obj1.y + obj1.h > obj2.y) {
+    return true;
+  } else {
+    return false;
+  }
+}
+function getCollisionSide(obj1, obj2) {
+  if (getCollision(obj1, obj2)) {
+    var obj1HalfW = obj1.w / 2;
+    var obj1HalfH = obj1.h / 2;
+    var obj2HalfW = obj2.w / 2;
+    var obj2HalfH = obj2.h / 2;
+    var obj1CenterX = obj1.x + obj1.w / 2;
+    var obj1CenterY = obj1.y + obj1.h / 2;
+    var obj2CenterX = obj2.x + obj2.w / 2;
+    var obj2CenterY = obj2.y + obj2.h / 2;
+    var diffX = obj1CenterX - obj2CenterX;
+    var diffY = obj1CenterY - obj2CenterY;
+    var minXDist = obj1HalfW + obj2HalfW;
+    var minYDist = obj1HalfH + obj2HalfH;
+    var depthX = diffX > 0 ? minXDist - diffX : -minXDist - diffX;
+    var depthY = diffY > 0 ? minYDist - diffY : -minYDist - diffY;
+    if (depthX != 0 && depthY != 0) {
+      if (Math.abs(depthX) < Math.abs(depthY)) {
+        if (depthX > 0) {
+          return CollisionSides.LEFT;
+        } else {
+          return CollisionSides.RIGHT;
+        }
+      } else {
+        if (depthY > 0) {
+          return CollisionSides.BOTTOM;
+        } else {
+          return CollisionSides.TOP;
+        }
+      }
+    }
+  }
+}
+
+// src/class/position/rect.ts
+class Rect {
+  x;
+  w;
+  y;
+  h;
+  constructor(x, y, w, h) {
+    this.x = x;
+    this.y = y;
+    this.w = w;
+    this.h = h;
+  }
+}
+
+// src/class/drawing/tileMap.ts
+class TileMap {
+  data;
+  offsetX;
+  offsetY;
+  tileSize;
+  tilePaths;
+  constructor(data, tileSize, offsetX = 0, offsetY = 0) {
+    this.data = data;
+    this.offsetX = offsetX;
+    this.offsetY = offsetY;
+    this.tileSize = tileSize;
+    this.tilePaths = [];
+  }
+  addTile(path) {
+    this.tilePaths.push(path);
+  }
+  draw() {
+    var tileGroup = new Group;
+    for (let y = 0;y < this.data.length; y++) {
+      const row = this.data[y];
+      for (let x = 0;x < row.length; x++) {
+        const tile = this.data[y][x];
+        var tileImage = new Sprite(this.tilePaths[tile], this.offsetX + x * this.tileSize, this.offsetY + y * this.tileSize);
+        tileGroup.add(tileImage, `t${y},${x}`);
+      }
+    }
+    tileGroup.draw();
+  }
+  getCollision(obj1, tileX, tileY) {
+    return getCollision(obj1, new Rect(tileX * this.tileSize + this.offsetX, tileY * this.tileSize + this.offsetY, this.tileSize, this.tileSize));
+  }
+}
+
+// src/class/position/point.ts
+class Point {
+  x;
+  y;
+  constructor(x, y) {
+    this.x = x;
+    this.y = y;
+  }
+}
+
+// src/const/canvas.ts
+var canvas = () => document.querySelector("#app");
+
+// src/const/controller.ts
+var controller = {
+  ArrowUp: { down: false },
+  ArrowDown: { down: false },
+  ArrowLeft: { down: false },
+  ArrowRight: { down: false },
+  Enter: { down: false },
+  Shift: { down: false },
+  Control: { down: false },
+  Escape: { down: false },
+  " ": { down: false },
+  q: { down: false },
+  w: { down: false },
+  e: { down: false },
+  r: { down: false },
+  t: { down: false },
+  y: { down: false },
+  u: { down: false },
+  i: { down: false },
+  o: { down: false },
+  p: { down: false },
+  a: { down: false },
+  s: { down: false },
+  d: { down: false },
+  f: { down: false },
+  g: { down: false },
+  h: { down: false },
+  j: { down: false },
+  k: { down: false },
+  l: { down: false },
+  z: { down: false },
+  x: { down: false },
+  c: { down: false },
+  v: { down: false },
+  b: { down: false },
+  n: { down: false },
+  m: { down: false },
+  "1": { down: false },
+  "2": { down: false },
+  "3": { down: false },
+  "4": { down: false },
+  "5": { down: false },
+  "6": { down: false },
+  "7": { down: false },
+  "8": { down: false },
+  "9": { down: false },
+  "0": { down: false },
+  ",": { down: false },
+  ".": { down: false },
+  "/": { down: false },
+  ";": { down: false },
+  "'": { down: false },
+  "[": { down: false },
+  "]": { down: false },
+  "-": { down: false },
+  "=": { down: false }
+};
+
+// src/class/state/baseState.ts
+class BaseState {
+  constructor() {
+    this.prePreload();
+  }
+  manager;
+  preloads;
+  objects;
+  async prePreload() {
+    this.preloads = {};
+    await this.preload();
+  }
+  async preload() {
+  }
+  finishPreload() {
+    this.preCreate();
+  }
+  bg;
+  bgColor;
+  preCreate() {
+    this.bgColor = "#FFFFFF";
+    window.addEventListener("keydown", (e) => {
+      if (controller[e.key]) {
+        controller[e.key].down = true;
+      }
+    });
+    window.addEventListener("keyup", (e) => {
+      if (controller[e.key]) {
+        controller[e.key].down = false;
+      }
+    });
+    this.objects = {};
+    this.bg = new RectangleShape(-1e4, -1e4, 1e4 + canvas().width, 1e4 + canvas().height, this.bgColor);
+    this.add(this.bg, "default-background");
+    this.create();
+  }
+  create() {
+  }
+  preUpdate(delta) {
+    this.bg.color = this.bgColor;
+    for (let key in this.objects) {
+      this.objects[key].draw();
+    }
+    this.update(delta);
+  }
+  update(delta) {
+  }
+  add(object, name, callback = () => {
+  }) {
+    callback();
+    this.objects[name] = object;
+  }
+  remove(name, callback = () => {
+  }) {
+    callback();
+    delete this.objects[name];
+  }
+  addPreload(name, data) {
+    this.preloads[name] = data;
+  }
+  getPreload(name) {
+    return this.preloads[name];
+  }
+}
+
+// src/const/colors.ts
+var colors = {
+  white: "#FFFFFF",
+  silver: "#CCCCCC",
+  gray: "#777777",
+  black: "#000000",
+  red: "#DE3163",
+  candyAppleRed: "#E6192E",
+  orange: "#FF7F50",
+  yellowOrange: "#FFBF00",
+  yellow: "#FFDF00",
+  gold: "#E8E84A",
+  lemon: "#CCCC77",
+  yellowGreen: "#9DD62B",
+  lime: "#77CC77",
+  green: "#9FE2BF",
+  darkGreen: "#22AB63",
+  teal: "#40E0D0",
+  skyBlue: "#00BBFF",
+  fowl: "#0085FF",
+  blue: "#6495ED",
+  deepBlue: "#15158A",
+  violet: "#4A2AE8",
+  purple: "#8128D4",
+  fuchsia: "#CCCCFF",
+  hotPink: "#DB2162",
+  fullRed: "#FF0000",
+  fullGreen: "#00FF00",
+  fullBlue: "#0000FF"
+};
+
+// src/func/getKeys.ts
+function getKeys(keys) {
+  return keys.some((key) => controller[key].down == true);
+}
+
+// src/func/startGame.ts
+function startGame(defaultScene) {
+  initEngine(defaultScene);
+}
+export {
+  startGame,
+  getManager,
+  getKeys,
+  getCollisionSide,
+  getCollision,
+  canvas as getCanvas,
+  controller,
+  colors,
+  TileMap,
+  TextLabel,
+  StateManager,
+  Sprite,
+  Sound,
+  SlicedSprite,
+  RectangleShape,
+  Rect,
+  Point,
+  OutlinedTextLabel,
+  OutlinedRectangleShape,
+  Music,
+  LineShape,
+  Group,
+  Font,
+  CollisionSides,
+  BaseState
+};

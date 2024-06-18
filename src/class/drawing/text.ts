@@ -1,4 +1,3 @@
-import { ctx } from "../../const/ctx";
 import type { Font } from "./font";
 
 export class TextLabel {
@@ -16,8 +15,8 @@ export class TextLabel {
   }
 
   draw() {
-    ctx().fillStyle = this.color;
-    ctx().font = this.font.getMerged();
-    ctx().fillText(this.text, this.x, this.y + (this.font.getSize() - 10));
+    window.ctx.fillStyle = this.color;
+    window.ctx.font = this.font.getMerged();
+    window.ctx.fillText(this.text, this.x, this.y + (this.font.getSize() - 10));
   }
 }

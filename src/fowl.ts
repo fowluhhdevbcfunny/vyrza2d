@@ -1,4 +1,5 @@
 // FowlJS
+import { getManager } from "./func/init";
 import { Music } from "./class/audio/music";
 import { Sound } from "./class/audio/sound";
 import { Font } from "./class/drawing/font";
@@ -19,29 +20,17 @@ import { canvas as getCanvas } from "./const/canvas";
 import { CollisionSides } from "./const/collisionSides";
 import { colors } from "./const/colors";
 import { type Controller, controller } from "./const/controller";
-import { ctx as getContext } from "./const/ctx";
 import { getCollision, getCollisionSide } from "./func/collision";
 import { getKeys } from "./func/getKeys";
 import { startGame } from "./func/startGame";
 import { type BaseObject, type BaseObjectPos } from "./type/object";
 
-// Declare canvas and context for later
-let canvas = document.querySelector("#app") as HTMLCanvasElement;
-let ctx = canvas!.getContext("2d")!;
-
 declare global {
   interface Window {
     ctx: CanvasRenderingContext2D;
     controller: Controller;
+    manager: StateManager;
   }
-}
-
-window.ctx = ctx;
-
-let manager = new StateManager();
-
-export function getManager() {
-  return manager;
 }
 
 // Exports
@@ -63,11 +52,11 @@ export {
   BaseState,
   StateManager,
   getCanvas,
+  getManager,
   CollisionSides,
   colors,
   type Controller,
   controller,
-  getContext,
   getCollision,
   getCollisionSide,
   getKeys,
@@ -75,25 +64,3 @@ export {
   type BaseObject,
   type BaseObjectPos,
 };
-
-// Game loop
-let now;
-let then = performance.now();
-let delta;
-
-function gameLoop() {
-  let interval = 1000 / 60;
-
-  now = performance.now();
-  delta = now - then;
-
-  if (delta > interval) {
-    then = now - (delta % interval);
-
-    manager.scene.preUpdate(delta);
-  }
-
-  requestAnimationFrame(gameLoop);
-}
-
-requestAnimationFrame(gameLoop);

@@ -1,7 +1,4 @@
-import { ctx } from "../../const/ctx";
 import type { Font } from "./font";
-
-const context = ctx();
 
 export class OutlinedTextLabel {
   x: number;
@@ -30,11 +27,15 @@ export class OutlinedTextLabel {
   }
 
   draw() {
-    context.fillStyle = this.color;
-    context.font = this.font.getMerged();
-    context.strokeStyle = this.outline_color;
-    context.lineWidth = this.outline_width * 2;
-    context.strokeText(this.text, this.x, this.y + (this.font.getSize() - 10));
-    context.fillText(this.text, this.x, this.y + (this.font.getSize() - 10));
+    window.ctx.fillStyle = this.color;
+    window.ctx.font = this.font.getMerged();
+    window.ctx.strokeStyle = this.outline_color;
+    window.ctx.lineWidth = this.outline_width * 2;
+    window.ctx.strokeText(
+      this.text,
+      this.x,
+      this.y + (this.font.getSize() - 10)
+    );
+    window.ctx.fillText(this.text, this.x, this.y + (this.font.getSize() - 10));
   }
 }

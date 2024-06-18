@@ -1,7 +1,3 @@
-import { ctx } from "../../const/ctx";
-
-const context = ctx();
-
 export class Sprite {
   src: string;
   scale: number;
@@ -22,6 +18,6 @@ export class Sprite {
     this.img.src = this.src;
     this.w = this.img.width * this.scale;
     this.h = this.img.height * this.scale;
-    context.drawImage(this.img, this.x, this.y, this.w, this.h);
+    window.ctx.drawImage(this.img, this.x, this.y, this.w, this.h);
   }
 }

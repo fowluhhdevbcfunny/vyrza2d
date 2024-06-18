@@ -4,7 +4,7 @@ async function compile(filePath: string, outputDir: string): Promise<void> {
   await Bun.build({
     entrypoints: [filePath],
     outdir: outputDir,
-    minify: true,
+    minify: false,
     plugins: [dts()],
   });
 }

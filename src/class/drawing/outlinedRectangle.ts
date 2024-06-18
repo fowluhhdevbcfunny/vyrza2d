@@ -1,6 +1,3 @@
-import { ctx } from "../../const/ctx";
-const context = ctx();
-
 export class OutlinedRectangleShape {
   x: number;
   y: number;
@@ -29,15 +26,15 @@ export class OutlinedRectangleShape {
   }
 
   draw() {
-    context.fillStyle = this.outline_color;
-    context.fillRect(
+    window.ctx.fillStyle = this.outline_color;
+    window.ctx.fillRect(
       this.x,
       this.y,
       this.w + this.outline_width,
       this.h + this.outline_width
     );
-    context.fillStyle = this.color;
-    context.fillRect(
+    window.ctx.fillStyle = this.color;
+    window.ctx.fillRect(
       this.x + this.outline_width,
       this.y + this.outline_width,
       this.w - this.outline_width,

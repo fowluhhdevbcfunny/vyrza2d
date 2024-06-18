@@ -1,7 +1,3 @@
-import { ctx } from "../../const/ctx";
-
-const context = ctx();
-
 export class RectangleShape {
   x: number;
   y: number;
@@ -17,7 +13,7 @@ export class RectangleShape {
   }
 
   draw() {
-    context.fillStyle = this.color;
-    context.fillRect(this.x, this.y, this.w, this.h);
+    window.ctx.fillStyle = this.color;
+    window.ctx.fillRect(this.x, this.y, this.w, this.h);
   }
 }

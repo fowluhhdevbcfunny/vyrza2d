@@ -1,7 +1,4 @@
-import { ctx } from "../../const/ctx";
 import type { Point } from "../position/point";
-
-const context = ctx();
 
 export class LineShape {
   point1: Point;
@@ -16,11 +13,11 @@ export class LineShape {
   }
 
   draw() {
-    context.beginPath();
-    context.moveTo(this.point1.x, this.point1.y);
-    context.lineTo(this.point2.x, this.point2.y);
-    context.lineWidth = this.width;
-    context.strokeStyle = this.color;
-    context.stroke();
+    window.ctx.beginPath();
+    window.ctx.moveTo(this.point1.x, this.point1.y);
+    window.ctx.lineTo(this.point2.x, this.point2.y);
+    window.ctx.lineWidth = this.width;
+    window.ctx.strokeStyle = this.color;
+    window.ctx.stroke();
   }
 }
