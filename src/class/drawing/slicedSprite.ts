@@ -24,7 +24,7 @@ export class SlicedSprite extends GameObject {
     sh: any,
     scale = 1
   ) {
-    super(x, y);
+    super(x, y, w, h);
     this.src = src;
     this.scale = scale;
     this.img = new Image();

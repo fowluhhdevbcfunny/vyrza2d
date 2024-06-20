@@ -16,14 +16,14 @@ export class State {
 
   manager!: StateManager;
   preloads!: Record<string, any>;
-  objects!: Record<string, GameObject>;
+  objects!: Array<GameObject>;
 
-  async prePreload() {
+  prePreload() {
     this.preloads = {};
-    await this.preload();
+    this.preload();
   }
 
-  async preload() {}
+  preload() {}
 
   finishPreload() {
     this.preCreate();
@@ -37,7 +37,7 @@ export class State {
   preCreate() {
     this.mousePos = { "x": 0, "y": 0 };
 
-    this.bgColor = colors.gray.white;
+    this.bgColor = colors[0].white;
 
     window.addEventListener("keydown", (e) => {
       if (controller[e.key]) {
@@ -67,7 +67,7 @@ export class State {
       this.mousePos = getMousePos(canvas(), e);
     });
 
-    this.objects = {};
+    this.objects = [];
 
     this.camera = new Camera();
 
@@ -79,8 +79,8 @@ export class State {
       this.bgColor
     );
 
-    this.add(this.bg, "default-background");
-    this.add(this.camera, "default-camera");
+    this.add(this.bg);
+    this.add(this.camera);
     this.create();
   }
 
@@ -89,21 +89,20 @@ export class State {
   preUpdate(delta: number) {
     this.bg.color = this.bgColor;
     for (let key in this.objects) {
-      this.objects[key].draw();
+      if (this.objects[key].exists) {
+        if (this.objects[key].visible) {
+          this.objects[key].draw();
+        }
+      }
     }
     this.update(delta);
   }
 
   update(delta: number) {}
 
-  add(object: GameObject, name: string, callback = () => {}) {
+  add(object: GameObject, callback = () => {}) {
     callback();
-    this.objects[name] = object;
-  }
-
-  remove(name: string | number, callback = () => {}) {
-    callback();
-    delete this.objects[name];
+    this.objects.push(object);
   }
 
   addPreload(name: string, data: any) {

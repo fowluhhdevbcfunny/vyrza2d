@@ -18,7 +18,7 @@ export class OutlinedRectangleShape extends GameObject {
     outline_color: string,
     outline_width: number
   ) {
-    super(x, y);
+    super(x, y, w, h);
     this.x = x;
     this.y = y;
     this.w = w;

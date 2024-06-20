@@ -33,7 +33,7 @@ export class TileMap extends GameObject {
           this.offsetX + x * this.tileSize,
           this.offsetY + y * this.tileSize
         );
-        tileGroup.add(tileImage, `t${y},${x}`);
+        tileGroup.add(tileImage);
       }
     }
     tileGroup.draw();
@@ -42,10 +42,9 @@ export class TileMap extends GameObject {
   getCollision(obj1: any, tileX: number, tileY: number) {
     let tile = new GameObject(
       tileX * this.tileSize + this.offsetX,
-      tileY * this.tileSize + this.offsetY
+      tileY * this.tileSize + this.offsetY,
+      this.tileSize, this.tileSize
     )
-    tile.w = this.tileSize;
-    tile.h = this.tileSize;
     return getCollision(
       obj1,
       tile

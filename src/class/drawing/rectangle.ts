@@ -7,7 +7,7 @@ export class RectangleShape extends GameObject {
   h: number;
   color: string;
   constructor(x: number, y: number, w: number, h: number, color: string) {
-    super(x, y);
+    super(x, y, w, h);
     this.x = x;
     this.y = y;
     this.w = w;

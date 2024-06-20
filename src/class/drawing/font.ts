@@ -18,3 +18,4 @@ export class Font {
     return this.name;
   }
 }
+

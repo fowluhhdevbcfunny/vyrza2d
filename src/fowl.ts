@@ -22,6 +22,7 @@ import { getKeys, getMouseKeys } from "./func/getKeys";
 import { startGame } from "./func/startGame";
 import { Camera } from "./class/drawing/camera";
 import { GameObject } from "./class/object";
+import { CollisionBound } from "./class/physics/collisionBound";
 
 declare global {
   interface Window {
@@ -56,6 +57,7 @@ export {
   controller,
   getCollision,
   getCollisionSide,
+  CollisionBound,
   getKeys,
   getMouseKeys,
   startGame,

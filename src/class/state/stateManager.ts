@@ -9,3 +9,4 @@ export class StateManager {
     this.scene.manager = this;
   }
 }
+

@@ -1,6 +1,6 @@
 export const colors = {
   // 16 grays
-  "gray": {
+  0: {
     white:         "#FFFFFF",
     darkWhite:     "#EEEEEE",
     darkerWhite:   "#DDDDDD",
@@ -28,8 +28,8 @@ export const colors = {
     green:         "#9FE2BF",
     teal:          "#40E0D0",
     fowl:          "#0085FF",
-    deepBlue:      "#15158A",
     violet:        "#4A2AE8",
+    deepBlue:      "#15158A",
     hotPink:       "#DB2162",
   },
     
@@ -56,5 +56,17 @@ export const colors = {
     fullTeal:      "#00FFFF",
     fullBlue:      "#0000FF",
     fullMagenta:   "#FF00FF",
+  },
+
+  4: {
+    variables:     "#E06C75",
+    numbers:       "#D19A66",
+    classes:       "#E5C07B",
+    strings:       "#98C379",
+    special:       "#56B6C2",
+    functions:     "#61AFEF",
+    keywords:      "#C678DD",
+    foreground:    "#D4D4D4",
+    comments:      "#7F848E",
   }
 };

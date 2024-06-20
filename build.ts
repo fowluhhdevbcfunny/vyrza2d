@@ -9,4 +9,4 @@ async function compile(filePath: string, outputDir: string): Promise<void> {
   });
 }
 
-compile("./src/fowl.ts", "../dist");
+compile("./src/fowl.ts", "./dist");
