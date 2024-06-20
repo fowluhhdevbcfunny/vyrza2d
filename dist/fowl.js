@@ -18,11 +18,11 @@ function initEngine(baseScene) {
   window.manager = manager;
   manager.switch(baseScene);
   let now;
-  let then = Date.now();
+  let then = performance.now();
   let delta;
   function gameLoop() {
     let interval = 16.666666666666668;
-    now = Date.now();
+    now = performance.now();
     delta = now - then;
     if (delta > interval) {
       then = now - delta % interval;
@@ -667,6 +667,17 @@ function startGame(defaultScene) {
   initEngine(defaultScene);
 }
 
+// src/class/event.ts
+class Event {
+  callback;
+  constructor(callback) {
+    this.callback = callback;
+  }
+  run() {
+    this.callback();
+  }
+}
+
 // src/class/physics/collisionBound.ts
 class CollisionBound {
   x;
@@ -704,6 +715,7 @@ export {
   Group,
   GameObject,
   Font,
+  Event,
   CollisionSides,
   CollisionBound,
   Camera

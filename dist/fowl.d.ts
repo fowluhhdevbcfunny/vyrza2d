@@ -235,6 +235,11 @@ export declare function getCollisionSide(obj1: GameObject, obj2: GameObject): Co
 export declare function getKeys(keys: any[]): boolean;
 export declare function getMouseKeys(keys: any[]): boolean;
 export declare function startGame(defaultScene: State): void;
+declare class Event$1 {
+	callback: () => {};
+	constructor(callback: () => {});
+	run(): void;
+}
 export declare class CollisionBound {
 	x: number;
 	y: number;
@@ -244,6 +249,7 @@ export declare class CollisionBound {
 }
 
 export {
+	Event$1 as Event,
 	canvas as getCanvas,
 };
 

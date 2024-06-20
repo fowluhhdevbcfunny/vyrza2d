@@ -22,6 +22,7 @@ import { getKeys, getMouseKeys } from "./func/getKeys";
 import { startGame } from "./func/startGame";
 import { Camera } from "./class/drawing/camera";
 import { GameObject } from "./class/object";
+import { Event } from "./class/event";
 import { CollisionBound } from "./class/physics/collisionBound";
 
 declare global {
@@ -47,6 +48,7 @@ export {
   Sprite,
   TextLabel,
   TileMap,
+  Event,
   State,
   StateManager,
   getCanvas,
