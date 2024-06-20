@@ -12,13 +12,13 @@ export function initEngine(baseScene: State) {
 
   // Game loop
   let now;
-  let then = Date.now();
+  let then = performance.now();
   let delta;
 
   function gameLoop() {
     let interval = 1000 / 60;
 
-    now = Date.now();
+    now = performance.now();
     delta = now - then;
 
     if (delta > interval) {
