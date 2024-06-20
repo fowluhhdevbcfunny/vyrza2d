@@ -1,6 +1,7 @@
+import { GameObject } from "../object";
 import type { Font } from "./font";
 
-export class OutlinedTextLabel {
+export class OutlinedTextLabel extends GameObject {
   x: number;
   y: number;
   font: Font;
@@ -17,6 +18,7 @@ export class OutlinedTextLabel {
     outline_width: number,
     font: Font
   ) {
+    super(x, y);
     this.x = x;
     this.y = y;
     this.font = font;

@@ -1,0 +1,26 @@
+{
+  "name": "fowl2d",
+  "version": "1.0.0",
+  "description": "Game development for the web",
+  "main": "fowl.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/fowluhhdevbcfunny/fowljs.git"
+  },
+  "keywords": [
+    "fowl",
+    "fowl2d",
+    "game",
+    "gamedev"
+  ],
+  "author": "FowluhhDev, Me1ad, Kat21",
+  "license": "BSD-3-Clause",
+  "types": "./fowl.d.ts",
+  "bugs": {
+    "url": "https://github.com/fowluhhdevbcfunny/fowljs/issues"
+  },
+  "homepage": "https://github.com/fowluhhdevbcfunny/fowljs#readme"
+}

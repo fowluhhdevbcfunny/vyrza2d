@@ -94,12 +94,29 @@ class Font {
   }
 }
 
+// src/class/object.ts
+class GameObject {
+  x;
+  y;
+  w;
+  h;
+  constructor(x = 0, y = 0) {
+    this.x = x;
+    this.y = y;
+    this.w = 0;
+    this.h = 0;
+  }
+  draw() {
+  }
+}
+
 // src/class/drawing/group.ts
-class Group {
+class Group extends GameObject {
   objects;
   x;
   y;
   constructor(x = 0, y = 0) {
+    super(x, y);
     this.objects = {};
     this.x = x;
     this.y = y;
@@ -113,10 +130,10 @@ class Group {
       this.objects[key].y -= this.y;
     }
   }
-  add(object, name, callback = () => {
+  add(object2, name, callback = () => {
   }) {
     callback();
-    this.objects[name] = object;
+    this.objects[name] = object2;
   }
   remove(name, callback = () => {
   }) {
@@ -128,30 +145,8 @@ class Group {
   }
 }
 
-// src/class/drawing/line.ts
-class LineShape {
-  point1;
-  point2;
-  width;
-  color;
-  constructor(point1, point2, width, color) {
-    this.point1 = point1;
-    this.point2 = point2;
-    this.width = width;
-    this.color = color;
-  }
-  draw() {
-    window.ctx.beginPath();
-    window.ctx.moveTo(this.point1.x, this.point1.y);
-    window.ctx.lineTo(this.point2.x, this.point2.y);
-    window.ctx.lineWidth = this.width;
-    window.ctx.strokeStyle = this.color;
-    window.ctx.stroke();
-  }
-}
-
 // src/class/drawing/outlinedRectangle.ts
-class OutlinedRectangleShape {
+class OutlinedRectangleShape extends GameObject {
   x;
   y;
   w;
@@ -160,6 +155,7 @@ class OutlinedRectangleShape {
   outline_color;
   outline_width;
   constructor(x, y, w, h, color, outline_color, outline_width) {
+    super(x, y);
     this.x = x;
     this.y = y;
     this.w = w;
@@ -177,7 +173,7 @@ class OutlinedRectangleShape {
 }
 
 // src/class/drawing/outlineText.ts
-class OutlinedTextLabel {
+class OutlinedTextLabel extends GameObject {
   x;
   y;
   font;
@@ -186,6 +182,7 @@ class OutlinedTextLabel {
   outline_color;
   outline_width;
   constructor(text, x, y, color, outline_color, outline_width, font) {
+    super(x, y);
     this.x = x;
     this.y = y;
     this.font = font;
@@ -205,13 +202,14 @@ class OutlinedTextLabel {
 }
 
 // src/class/drawing/rectangle.ts
-class RectangleShape {
+class RectangleShape extends GameObject {
   x;
   y;
   w;
   h;
   color;
   constructor(x, y, w, h, color) {
+    super(x, y);
     this.x = x;
     this.y = y;
     this.w = w;
@@ -225,7 +223,7 @@ class RectangleShape {
 }
 
 // src/class/drawing/slicedSprite.ts
-class SlicedSprite {
+class SlicedSprite extends GameObject {
   src;
   scale;
   img;
@@ -238,6 +236,7 @@ class SlicedSprite {
   sw;
   sh;
   constructor(src, x, y, w, h, sx, sy, sw, sh, scale = 1) {
+    super(x, y);
     this.src = src;
     this.scale = scale;
     this.img = new Image;
@@ -257,15 +256,16 @@ class SlicedSprite {
 }
 
 // src/class/drawing/sprite.ts
-class Sprite {
+class Sprite extends GameObject {
   src;
-  scale;
+  scale = 1;
   img;
   x;
   y;
-  w;
-  h;
+  w = 0;
+  h = 0;
   constructor(src, x, y, scale = 1) {
+    super(x, y);
     this.src = src;
     this.scale = scale;
     this.img = new Image;
@@ -281,13 +281,14 @@ class Sprite {
 }
 
 // src/class/drawing/text.ts
-class TextLabel {
+class TextLabel extends GameObject {
   x;
   y;
   font;
   color;
   text;
   constructor(text, x, y, color, font) {
+    super(x, y);
     this.x = x;
     this.y = y;
     this.font = font;
@@ -352,28 +353,15 @@ function getCollisionSide(obj1, obj2) {
   }
 }
 
-// src/class/position/rect.ts
-class Rect {
-  x;
-  w;
-  y;
-  h;
-  constructor(x, y, w, h) {
-    this.x = x;
-    this.y = y;
-    this.w = w;
-    this.h = h;
-  }
-}
-
 // src/class/drawing/tileMap.ts
-class TileMap {
+class TileMap extends GameObject {
   data;
   offsetX;
   offsetY;
   tileSize;
   tilePaths;
   constructor(data, tileSize, offsetX = 0, offsetY = 0) {
+    super(offsetX, offsetY);
     this.data = data;
     this.offsetX = offsetX;
     this.offsetY = offsetY;
@@ -396,17 +384,10 @@ class TileMap {
     tileGroup.draw();
   }
   getCollision(obj1, tileX, tileY) {
-    return getCollision(obj1, new Rect(tileX * this.tileSize + this.offsetX, tileY * this.tileSize + this.offsetY, this.tileSize, this.tileSize));
-  }
-}
-
-// src/class/position/point.ts
-class Point {
-  x;
-  y;
-  constructor(x, y) {
-    this.x = x;
-    this.y = y;
+    let tile = new GameObject(tileX * this.tileSize + this.offsetX, tileY * this.tileSize + this.offsetY);
+    tile.w = this.tileSize;
+    tile.h = this.tileSize;
+    return getCollision(obj1, tile);
   }
 }
 
@@ -470,8 +451,6 @@ var controller = {
   "-": { down: false },
   "=": { down: false }
 };
-
-// src/const/mouse.ts
 var mouseController = {
   0: { down: false },
   1: { down: false },
@@ -479,7 +458,7 @@ var mouseController = {
 };
 
 // src/class/drawing/camera.ts
-class Camera {
+class Camera extends GameObject {
   x;
   y;
   lastX;
@@ -487,6 +466,7 @@ class Camera {
   lock = false;
   lockObject;
   constructor(x = 0, y = 0) {
+    super(x, y);
     this.x = x;
     this.y = y;
   }
@@ -498,10 +478,10 @@ class Camera {
       window.ctx.translate(-this.x, -this.y);
     }
   }
-  follow(object) {
+  follow(object10) {
     this.lastX = this.x;
     this.lastY = this.y;
-    this.lockObject = object;
+    this.lockObject = object10;
     this.lock = true;
   }
   unfollow() {
@@ -511,11 +491,27 @@ class Camera {
   }
 }
 
-// src/class/state/baseState.ts
-class BaseState {
+// src/func/getKeys.ts
+function getKeys(keys) {
+  return keys.some((key) => controller[key].down == true);
+}
+function getMouseKeys(keys) {
+  return keys.some((key) => mouseController[key].down == true);
+}
+function getMousePos(canvas3, event) {
+  var rect = canvas3.getBoundingClientRect();
+  return {
+    x: event.clientX - rect.left,
+    y: event.clientY - rect.top
+  };
+}
+
+// src/class/state/state.ts
+class State {
   constructor() {
     this.prePreload();
   }
+  mousePos;
   manager;
   preloads;
   objects;
@@ -532,7 +528,8 @@ class BaseState {
   bgColor;
   camera;
   preCreate() {
-    this.bgColor = "#FFFFFF";
+    this.mousePos = { x: 0, y: 0 };
+    this.bgColor = colors.gray.white;
     window.addEventListener("keydown", (e) => {
       if (controller[e.key]) {
         controller[e.key].down = true;
@@ -553,6 +550,9 @@ class BaseState {
         mouseController[e.button].down = false;
       }
     });
+    window.addEventListener("pointermove", (e) => {
+      this.mousePos = getMousePos(canvas(), e);
+    });
     this.objects = {};
     this.camera = new Camera;
     this.bg = new RectangleShape(-1e4, -1e4, 1e4 + canvas().width, 1e4 + canvas().height, this.bgColor);
@@ -571,10 +571,10 @@ class BaseState {
   }
   update(delta) {
   }
-  add(object, name, callback = () => {
+  add(object10, name, callback = () => {
   }) {
     callback();
-    this.objects[name] = object;
+    this.objects[name] = object10;
   }
   remove(name, callback = () => {
   }) {
@@ -600,46 +600,87 @@ class BaseState {
 
 // src/const/colors.ts
 var colors = {
-  white: "#FFFFFF",
-  silver: "#CCCCCC",
-  gray: "#777777",
-  black: "#000000",
-  red: "#DE3163",
-  candyAppleRed: "#E6192E",
-  orange: "#FF7F50",
-  yellowOrange: "#FFBF00",
-  yellow: "#FFDF00",
-  gold: "#E8E84A",
-  lemon: "#CCCC77",
-  yellowGreen: "#9DD62B",
-  lime: "#77CC77",
-  green: "#9FE2BF",
-  darkGreen: "#22AB63",
-  teal: "#40E0D0",
-  skyBlue: "#00BBFF",
-  fowl: "#0085FF",
-  blue: "#6495ED",
-  deepBlue: "#15158A",
-  violet: "#4A2AE8",
-  purple: "#8128D4",
-  fuchsia: "#CCCCFF",
-  hotPink: "#DB2162",
-  fullRed: "#FF0000",
-  fullGreen: "#00FF00",
-  fullBlue: "#0000FF"
+  gray: {
+    white: "#FFFFFF",
+    darkWhite: "#EEEEEE",
+    darkerWhite: "#DDDDDD",
+    silver: "#CCCCCC",
+    darkSilver: "#BBBBBB",
+    darkerSilver: "#AAAAAA",
+    deepSilver: "#999999",
+    deeperSilver: "#888888",
+    gray: "#777777",
+    dimGray: "#666666",
+    dimmerGray: "#555555",
+    darkGray: "#444444",
+    darkerGray: "#333333",
+    deepGray: "#222222",
+    lightBlack: "#111111",
+    black: "#000000"
+  },
+  1: {
+    red: "#DE3163",
+    orange: "#FF7F50",
+    yellow: "#FFDF00",
+    yellowGreen: "#9DD62B",
+    green: "#9FE2BF",
+    teal: "#40E0D0",
+    fowl: "#0085FF",
+    deepBlue: "#15158A",
+    violet: "#4A2AE8",
+    hotPink: "#DB2162"
+  },
+  2: {
+    candyAppleRed: "#E6192E",
+    yellowOrange: "#FFBF00",
+    gold: "#E8E84A",
+    lemon: "#CCCC77",
+    lime: "#77CC77",
+    darkGreen: "#22AB63",
+    skyBlue: "#00BBFF",
+    blue: "#6495ED",
+    purple: "#8128D4",
+    fuchsia: "#CCCCFF"
+  },
+  3: {
+    fullRed: "#FF0000",
+    fullYellow: "#FFFF00",
+    fullGreen: "#00FF00",
+    fullTeal: "#00FFFF",
+    fullBlue: "#0000FF",
+    fullMagenta: "#FF00FF"
+  }
 };
-
-// src/func/getKeys.ts
-function getKeys(keys) {
-  return keys.some((key) => controller[key].down == true);
-}
-function getMouseKeys(keys) {
-  return keys.some((key) => mouseController[key].down == true);
-}
 
 // src/func/startGame.ts
 function startGame(defaultScene) {
+  console.log("Fowl2D - FowluhhDev, Me1ad, and Kat21");
   initEngine(defaultScene);
+}
+
+// src/class/gui/window.ts
+class GUIWindow extends Group {
+  title;
+  x;
+  y;
+  w;
+  h;
+  constructor(x, y, w, h, title) {
+    super(x, y);
+    this.objects = {};
+    this.x = x;
+    this.y = y;
+    this.w = w;
+    this.h = h;
+    this.title = title;
+    this.create();
+  }
+  create() {
+    let titlebar = new RectangleShape(0, 0, this.w, 20, colors.gray.white);
+    let back = new RectangleShape(0, 0, this.w, this.h, colors.gray.darkerSilver);
+    this.add(back, "default_back");
+    this.add(titlebar, "default_titlebar");
+  }
 }
 export {
   startGame,
@@ -654,19 +695,18 @@ export {
   TileMap,
   TextLabel,
   StateManager,
+  State,
   Sprite,
   Sound,
   SlicedSprite,
   RectangleShape,
-  Rect,
-  Point,
   OutlinedTextLabel,
   OutlinedRectangleShape,
   Music,
-  LineShape,
   Group,
+  GameObject,
+  GUIWindow,
   Font,
   CollisionSides,
-  Camera,
-  BaseState
+  Camera
 };

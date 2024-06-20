@@ -1,12 +1,15 @@
-export class Sprite {
+import { GameObject } from "../object";
+
+export class Sprite extends GameObject {
   src: string;
-  scale: number;
+  scale: number = 1;
   img: HTMLImageElement;
   x: any;
   y: any;
-  w!: number;
-  h!: number;
+  w: number = 0;
+  h: number = 0;
   constructor(src: string, x: any, y: any, scale = 1) {
+    super(x, y);
     this.src = src;
     this.scale = scale;
     this.img = new Image();

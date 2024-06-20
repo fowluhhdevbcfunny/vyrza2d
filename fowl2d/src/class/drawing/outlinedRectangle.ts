@@ -1,4 +1,6 @@
-export class OutlinedRectangleShape {
+import { GameObject } from "../object";
+
+export class OutlinedRectangleShape extends GameObject {
   x: number;
   y: number;
   w: number;
@@ -16,6 +18,7 @@ export class OutlinedRectangleShape {
     outline_color: string,
     outline_width: number
   ) {
+    super(x, y);
     this.x = x;
     this.y = y;
     this.w = w;

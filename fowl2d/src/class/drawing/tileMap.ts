@@ -1,15 +1,16 @@
 import { getCollision } from "../../func/collision";
-import { Rect } from "../position/rect";
+import { GameObject } from "../object";
 import { Group } from "./group";
 import { Sprite } from "./sprite";
 
-export class TileMap {
+export class TileMap extends GameObject {
   data: any;
   offsetX: number;
   offsetY: number;
   tileSize: any;
   tilePaths: string[];
   constructor(data: any, tileSize: any, offsetX = 0, offsetY = 0) {
+    super(offsetX, offsetY);
     this.data = data;
     this.offsetX = offsetX;
     this.offsetY = offsetY;
@@ -39,14 +40,15 @@ export class TileMap {
   }
 
   getCollision(obj1: any, tileX: number, tileY: number) {
+    let tile = new GameObject(
+      tileX * this.tileSize + this.offsetX,
+      tileY * this.tileSize + this.offsetY
+    )
+    tile.w = this.tileSize;
+    tile.h = this.tileSize;
     return getCollision(
       obj1,
-      new Rect(
-        tileX * this.tileSize + this.offsetX,
-        tileY * this.tileSize + this.offsetY,
-        this.tileSize,
-        this.tileSize
-      )
+      tile
     );
   }
 }

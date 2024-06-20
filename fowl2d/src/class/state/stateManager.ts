@@ -1,10 +1,10 @@
-import type { BaseState } from "./baseState";
+import type { State } from "./state";
 
 export class StateManager {
-  scene!: BaseState;
+  scene!: State;
   constructor() {}
 
-  switch(scene: BaseState) {
+  switch(scene: State) {
     this.scene = scene;
     this.scene.manager = this;
   }

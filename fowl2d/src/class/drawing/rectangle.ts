@@ -1,10 +1,13 @@
-export class RectangleShape {
+import { GameObject } from "../object";
+
+export class RectangleShape extends GameObject {
   x: number;
   y: number;
   w: number;
   h: number;
   color: string;
   constructor(x: number, y: number, w: number, h: number, color: string) {
+    super(x, y);
     this.x = x;
     this.y = y;
     this.w = w;

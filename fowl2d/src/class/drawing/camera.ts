@@ -1,6 +1,7 @@
 import { canvas } from "../../const/canvas";
+import { GameObject } from "../object";
 
-export class Camera {
+export class Camera extends GameObject {
     x: any;
     y: any;
     lastX: any;
@@ -8,6 +9,7 @@ export class Camera {
     lock: boolean = false;
     lockObject: any;
     constructor(x:any = 0, y:any = 0) {
+      super(x, y);
       this.x = x;
       this.y = y;
     }

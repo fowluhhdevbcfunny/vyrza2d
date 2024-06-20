@@ -1,9 +1,9 @@
+import type { GameObject } from "../class/object";
 import { CollisionSides } from "../const/collisionSides";
-import type { Rect } from "../fowl";
 
 export function getCollision(
-  obj1: { x: number; w: any; y: number; h: any },
-  obj2: Rect
+  obj1: GameObject,
+  obj2: GameObject
 ) {
   if (
     obj1.x < obj2.x + obj2.w &&
@@ -17,8 +17,8 @@ export function getCollision(
   }
 }
 export function getCollisionSide(
-  obj1: { w: number; h: number; x: number; y: number },
-  obj2: { w: number; h: number; x: number; y: number }
+  obj1: GameObject,
+  obj2: GameObject,
 ) {
   if (getCollision(obj1, obj2)) {
     var obj1HalfW = obj1.w / 2;

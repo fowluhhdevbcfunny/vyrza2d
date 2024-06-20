@@ -1,19 +1,22 @@
 import { canvas } from "../../const/canvas";
-import { controller } from "../../const/controller";
+import { controller, mouseController} from "../../const/controller";
 import { RectangleShape } from "../drawing/rectangle";
-import type { BaseObject } from "../../type/object";
 import type { StateManager } from "./stateManager";
-import { mouseController } from "../../const/mouse";
 import { Camera } from "../drawing/camera";
+import type { GameObject } from "../object";
+import { getMousePos } from "../../func/getKeys";
+import { colors } from "../../fowl";
 
-export class BaseState {
+export class State {
   constructor() {
     this.prePreload();
   }
 
+  mousePos:any;
+
   manager!: StateManager;
   preloads!: Record<string, any>;
-  objects!: Record<string, BaseObject>;
+  objects!: Record<string, GameObject>;
 
   async prePreload() {
     this.preloads = {};
@@ -32,7 +35,9 @@ export class BaseState {
   camera!: Camera;
 
   preCreate() {
-    this.bgColor = "#FFFFFF";
+    this.mousePos = { "x": 0, "y": 0 };
+
+    this.bgColor = colors.gray.white;
 
     window.addEventListener("keydown", (e) => {
       if (controller[e.key]) {
@@ -56,6 +61,10 @@ export class BaseState {
       if (mouseController[e.button]) {
         mouseController[e.button].down = false;
       }
+    });
+
+    window.addEventListener("pointermove", (e) => {
+      this.mousePos = getMousePos(canvas(), e);
     });
 
     this.objects = {};
@@ -87,7 +96,7 @@ export class BaseState {
 
   update(delta: number) {}
 
-  add(object: BaseObject, name: string, callback = () => {}) {
+  add(object: GameObject, name: string, callback = () => {}) {
     callback();
     this.objects[name] = object;
   }

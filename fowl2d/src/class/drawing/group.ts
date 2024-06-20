@@ -1,11 +1,12 @@
-import type { BaseObjectPos } from "../../type/object";
-import type { Sprite } from "./sprite";
+import { GameObject } from "../object";
 
-export class Group {
-  objects: Record<string, BaseObjectPos>;
+export class Group extends GameObject {
+  objects: Record<string, GameObject>;
   x: number;
   y: number;
   constructor(x = 0, y = 0) {
+    super(x, y);
+
     this.objects = {};
 
     this.x = x;
@@ -22,7 +23,7 @@ export class Group {
     }
   }
 
-  add(object: Sprite, name: string, callback = () => {}) {
+  add(object: GameObject, name: string, callback = () => {}) {
     callback();
     this.objects[name] = object;
   }

@@ -56,3 +56,9 @@ export let controller: Controller = {
   "-": { down: false },
   "=": { down: false },
 };
+
+export let mouseController: Controller = {
+  0: { down: false },
+  1: { down: false },
+  2: { down: false },
+};

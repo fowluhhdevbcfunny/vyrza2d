@@ -1,7 +1,7 @@
 import { StateManager } from "../class/state/stateManager";
-import type { BaseState } from "../class/state/baseState";
+import type { State } from "../class/state/state";
 
-export function initEngine(baseScene: BaseState) {
+export function initEngine(baseScene: State) {
   let canvas = document.querySelector("#app") as HTMLCanvasElement;
   let ctx = canvas!.getContext("2d")!;
   window.ctx = ctx;

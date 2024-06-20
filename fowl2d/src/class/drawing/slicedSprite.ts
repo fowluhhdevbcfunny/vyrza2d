@@ -1,4 +1,6 @@
-export class SlicedSprite {
+import { GameObject } from "../object";
+
+export class SlicedSprite extends GameObject {
   src: any;
   scale: number;
   img: HTMLImageElement;
@@ -22,6 +24,7 @@ export class SlicedSprite {
     sh: any,
     scale = 1
   ) {
+    super(x, y);
     this.src = src;
     this.scale = scale;
     this.img = new Image();
