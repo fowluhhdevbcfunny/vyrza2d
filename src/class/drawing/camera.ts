@@ -1,5 +1,5 @@
 import { canvas } from "../../const/canvas";
-import { GameObject } from "../object";
+import { GameObject } from "../types/object";
 
 export class Camera extends GameObject {
     x: any;

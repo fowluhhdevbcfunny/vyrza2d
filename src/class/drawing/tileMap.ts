@@ -1,5 +1,5 @@
 import { getCollision } from "../../func/collision";
-import { GameObject } from "../object";
+import { GameObject } from "../types/object";
 import { Group } from "./group";
 import { Sprite } from "./sprite";
 

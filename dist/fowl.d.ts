@@ -59,18 +59,21 @@ export declare class StateManager {
 	switch(scene: State): void;
 }
 export declare function getManager(): StateManager;
-export declare class Music {
+export declare class AudioObject {
 	source: string;
 	audio: HTMLAudioElement;
 	ready: boolean;
 	constructor(source: string);
 	play(force?: boolean): void;
-	stop(): void;
 }
-export declare class Sound {
+export declare class Music extends AudioObject {
 	source: string;
 	constructor(source: string);
-	play(): void;
+	stop(): void;
+}
+export declare class Sound extends AudioObject {
+	source: string;
+	constructor(source: string);
 }
 export declare class Font {
 	size: number;
@@ -240,12 +243,12 @@ declare class Event$1 {
 	constructor(callback: () => {});
 	run(): void;
 }
-export declare class CollisionBound {
-	x: number;
-	y: number;
-	w: number;
-	h: number;
-	constructor(x: number, y: number, w: number, h: number);
+export declare class AudioBus {
+	vol: number;
+	clips: AudioObject[];
+	constructor();
+	setVolume(vol: number): void;
+	add(object: AudioObject): void;
 }
 
 export {

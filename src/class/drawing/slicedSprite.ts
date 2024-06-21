@@ -1,4 +1,4 @@
-import { GameObject } from "../object";
+import { GameObject } from "../types/object";
 
 export class SlicedSprite extends GameObject {
   src: any;

@@ -1,4 +1,4 @@
-import { GameObject } from "../object";
+import { GameObject } from "../types/object";
 
 export class OutlinedRectangleShape extends GameObject {
   x: number;

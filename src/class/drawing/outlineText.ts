@@ -1,4 +1,4 @@
-import { GameObject } from "../object";
+import { GameObject } from "../types/object";
 import type { Font } from "./font";
 
 export class OutlinedTextLabel extends GameObject {

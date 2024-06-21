@@ -21,9 +21,10 @@ import { getCollision, getCollisionSide } from "./func/collision";
 import { getKeys, getMouseKeys } from "./func/getKeys";
 import { startGame } from "./func/startGame";
 import { Camera } from "./class/drawing/camera";
-import { GameObject } from "./class/object";
-import { Event } from "./class/event";
-import { CollisionBound } from "./class/physics/collisionBound";
+import { GameObject } from "./class/types/object";
+import { Event } from "./class/types/event";
+import { AudioBus } from "./class/audio/audiobus";
+import { AudioObject } from "./class/types/audio";
 
 declare global {
   interface Window {
@@ -37,6 +38,8 @@ declare global {
 export {
   Music,
   Sound,
+  AudioBus,
+  AudioObject,
   GameObject,
   Camera,
   Font,
@@ -59,7 +62,6 @@ export {
   controller,
   getCollision,
   getCollisionSide,
-  CollisionBound,
   getKeys,
   getMouseKeys,
   startGame,

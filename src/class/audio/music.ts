@@ -1,20 +1,13 @@
-export class Music {
+import { AudioObject } from "../types/audio";
+
+export class Music extends AudioObject {
   source: string;
-  audio: HTMLAudioElement;
-  ready: boolean;
   constructor(source: string) {
+    super(source);
+
     this.source = source;
-    this.ready = false;
-    this.audio = new Audio(this.source);
-    this.audio.load();
-    this.audio.onload = () => {
-      this.ready = true;
-    };
   }
 
-  play(force?: boolean) {
-    if (this.ready || force) this.audio.play();
-  }
   stop() {
     this.audio.pause();
     this.audio.fastSeek(0);

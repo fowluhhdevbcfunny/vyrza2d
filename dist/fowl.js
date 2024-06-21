@@ -39,8 +39,8 @@ function getManager() {
   return window.manager;
 }
 
-// src/class/audio/music.ts
-class Music {
+// src/class/types/audio.ts
+class AudioObject {
   source;
   audio;
   ready;
@@ -57,6 +57,15 @@ class Music {
     if (this.ready || force)
       this.audio.play();
   }
+}
+
+// src/class/audio/music.ts
+class Music extends AudioObject {
+  source;
+  constructor(source) {
+    super(source);
+    this.source = source;
+  }
   stop() {
     this.audio.pause();
     this.audio.fastSeek(0);
@@ -64,14 +73,11 @@ class Music {
 }
 
 // src/class/audio/sound.ts
-class Sound {
+class Sound extends AudioObject {
   source;
   constructor(source) {
+    super(source);
     this.source = source;
-  }
-  play() {
-    var audio = new Audio(this.source);
-    audio.play();
   }
 }
 
@@ -94,7 +100,7 @@ class Font {
   }
 }
 
-// src/class/object.ts
+// src/class/types/object.ts
 class GameObject {
   x;
   y;
@@ -667,7 +673,7 @@ function startGame(defaultScene) {
   initEngine(defaultScene);
 }
 
-// src/class/event.ts
+// src/class/types/event.ts
 class Event {
   callback;
   constructor(callback) {
@@ -678,17 +684,21 @@ class Event {
   }
 }
 
-// src/class/physics/collisionBound.ts
-class CollisionBound {
-  x;
-  y;
-  w;
-  h;
-  constructor(x, y, w, h) {
-    this.x = x;
-    this.y = y;
-    this.w = w;
-    this.h = h;
+// src/class/audio/audiobus.ts
+class AudioBus {
+  vol;
+  clips;
+  constructor() {
+    this.vol = 1;
+    this.clips = [];
+  }
+  setVolume(vol) {
+    for (let c in this.clips) {
+      this.clips[c].audio.volume = vol / 100;
+    }
+  }
+  add(object10) {
+    this.clips.push(object10);
   }
 }
 export {
@@ -717,6 +727,7 @@ export {
   Font,
   Event,
   CollisionSides,
-  CollisionBound,
-  Camera
+  Camera,
+  AudioObject,
+  AudioBus
 };

@@ -3,7 +3,7 @@ import { controller, mouseController} from "../../const/controller";
 import { RectangleShape } from "../drawing/rectangle";
 import type { StateManager } from "./stateManager";
 import { Camera } from "../drawing/camera";
-import type { GameObject } from "../object";
+import type { GameObject } from "../types/object";
 import { getMousePos } from "../../func/getKeys";
 import { colors } from "../../fowl";
 
