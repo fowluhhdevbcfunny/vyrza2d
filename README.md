@@ -1,4 +1,4 @@
-# FowlJS
+# Fowl2D
 
 A game framework built for JavaScript.
 
