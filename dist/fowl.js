@@ -10,13 +10,14 @@ class StateManager {
 }
 
 // src/func/init.ts
-function initEngine(baseScene) {
+function initEngine(baseScene, pixelated = false) {
   let canvas = document.querySelector("#app");
   let ctx = canvas.getContext("2d");
   window.ctx = ctx;
   let manager = new StateManager;
   window.manager = manager;
   manager.switch(baseScene);
+  window.ctx.imageSmoothingEnabled = !pixelated;
   let now;
   let then = performance.now();
   let delta;
@@ -100,24 +101,40 @@ class Font {
   }
 }
 
-// src/class/types/object.ts
-class GameObject {
+// src/class/types/basic.ts
+class Basic {
   x;
   y;
+  exists = true;
+  constructor(x = 0, y = 0) {
+    this.x = x;
+    this.y = y;
+  }
+  kill() {
+    this.exists = false;
+  }
+}
+
+// src/class/types/object.ts
+class GameObject extends Basic {
   w;
   h;
   visible = true;
-  exists = true;
   constructor(x = 0, y = 0, w = 0, h = 0) {
+    super(x, y);
     this.x = x;
     this.y = y;
     this.w = w;
     this.h = h;
   }
-  draw() {
+  canDraw() {
+    if (this.exists) {
+      if (this.visible) {
+        return true;
+      }
+    }
   }
-  kill() {
-    this.exists = false;
+  draw() {
   }
 }
 
@@ -134,14 +151,12 @@ class Group extends GameObject {
   }
   draw() {
     for (let key in this.objects) {
-      if (this.objects[key].exists) {
-        if (this.objects[key].visible) {
-          this.objects[key].x += this.x;
-          this.objects[key].y += this.y;
-          this.objects[key].draw();
-          this.objects[key].x -= this.x;
-          this.objects[key].y -= this.y;
-        }
+      if (this.objects[key].canDraw()) {
+        this.objects[key].x += this.x;
+        this.objects[key].y += this.y;
+        this.objects[key].draw();
+        this.objects[key].x -= this.x;
+        this.objects[key].y -= this.y;
       }
     }
   }
@@ -309,7 +324,7 @@ class TextLabel extends GameObject {
   }
 }
 
-// src/const/collisionSides.ts
+// src/data/collisionSides.ts
 var CollisionSides;
 (function(CollisionSides2) {
   CollisionSides2[CollisionSides2["TOP"] = 0] = "TOP";
@@ -396,10 +411,10 @@ class TileMap extends GameObject {
   }
 }
 
-// src/const/canvas.ts
+// src/data/canvas.ts
 var canvas = () => document.querySelector("#app");
 
-// src/const/controller.ts
+// src/data/controller.ts
 var controller = {
   ArrowUp: { down: false },
   ArrowDown: { down: false },
@@ -570,10 +585,8 @@ class State {
   preUpdate(delta) {
     this.bg.color = this.bgColor;
     for (let key in this.objects) {
-      if (this.objects[key].exists) {
-        if (this.objects[key].visible) {
-          this.objects[key].draw();
-        }
+      if (this.objects[key].canDraw()) {
+        this.objects[key].draw();
       }
     }
     this.update(delta);
@@ -602,7 +615,7 @@ class State {
   }
 }
 
-// src/const/colors.ts
+// src/data/colors.ts
 var colors = {
   0: {
     white: "#FFFFFF",
@@ -728,6 +741,7 @@ export {
   Event,
   CollisionSides,
   Camera,
+  Basic,
   AudioObject,
   AudioBus
 };

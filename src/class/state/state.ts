@@ -1,5 +1,5 @@
-import { canvas } from "../../const/canvas";
-import { controller, mouseController} from "../../const/controller";
+import { canvas } from "../../data/canvas";
+import { controller, mouseController} from "../../data/controller";
 import { RectangleShape } from "../drawing/rectangle";
 import type { StateManager } from "./stateManager";
 import { Camera } from "../drawing/camera";
@@ -89,10 +89,8 @@ export class State {
   preUpdate(delta: number) {
     this.bg.color = this.bgColor;
     for (let key in this.objects) {
-      if (this.objects[key].exists) {
-        if (this.objects[key].visible) {
-          this.objects[key].draw();
-        }
+      if (this.objects[key].canDraw()) {
+        this.objects[key].draw();
       }
     }
     this.update(delta);

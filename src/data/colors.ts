@@ -58,6 +58,7 @@ export const colors = {
     fullMagenta:   "#FF00FF",
   },
 
+  // vscode colors ræl
   4: {
     variables:     "#E06C75",
     numbers:       "#D19A66",

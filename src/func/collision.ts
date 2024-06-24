@@ -1,5 +1,5 @@
-import { CollisionSides } from "../const/collisionSides";
-import type { GameObject } from "../fowl";
+import { CollisionSides } from "../data/collisionSides";
+import type { GameObject } from "../class/types/object";
 
 export function getCollision(
   obj1: GameObject,

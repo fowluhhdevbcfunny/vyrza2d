@@ -16,9 +16,3 @@ You can get the template here: [FowlJS Template](https://github.com/fowluhhdevbc
 - FowluhhDevBCFunny
 - Me1ad
 - Kat21 (also made the entirety of v0.5)
-
-## TODO
-
-List of items from talks:
-
-- ~~Audio Busses~~

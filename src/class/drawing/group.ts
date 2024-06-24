@@ -15,18 +15,14 @@ export class Group extends GameObject {
 
   draw() {
     for (let key in this.objects) {
-      if (this.objects[key].exists) {
-        if (this.objects[key].visible) {
+      if (this.objects[key].canDraw()) {
+        this.objects[key].x += this.x;
+        this.objects[key].y += this.y;
 
-          this.objects[key].x += this.x;
-          this.objects[key].y += this.y;
+        this.objects[key].draw();
 
-          this.objects[key].draw();
-
-          this.objects[key].x -= this.x;
-          this.objects[key].y -= this.y;
-
-        }
+        this.objects[key].x -= this.x;
+        this.objects[key].y -= this.y;
       }
     }
   }

@@ -1,7 +1,7 @@
 import { StateManager } from "../class/state/stateManager";
 import type { State } from "../class/state/state";
 
-export function initEngine(baseScene: State) {
+export function initEngine(baseScene: State, pixelated:boolean = false) {
   let canvas = document.querySelector("#app") as HTMLCanvasElement;
   let ctx = canvas!.getContext("2d")!;
   window.ctx = ctx;
@@ -9,6 +9,8 @@ export function initEngine(baseScene: State) {
   let manager = new StateManager();
   window.manager = manager;
   manager.switch(baseScene);
+
+  window.ctx.imageSmoothingEnabled = !pixelated;
 
   // Game loop
   let now;

@@ -1,4 +1,4 @@
-import { controller, mouseController } from "../const/controller";
+import { controller, mouseController } from "../data/controller";
 
 export function getKeys(keys: any[]) {
   return keys.some((key: string | number) => controller[key].down == true);

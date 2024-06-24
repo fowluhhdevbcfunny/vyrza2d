@@ -13,10 +13,10 @@ import { TextLabel } from "./class/drawing/text";
 import { TileMap } from "./class/drawing/tileMap";
 import { State } from "./class/state/state";
 import { StateManager } from "./class/state/stateManager";
-import { canvas as getCanvas } from "./const/canvas";
-import { CollisionSides } from "./const/collisionSides";
-import { colors } from "./const/colors";
-import { type Controller, controller } from "./const/controller";
+import { canvas as getCanvas } from "./data/canvas";
+import { CollisionSides } from "./data/collisionSides";
+import { colors } from "./data/colors";
+import { type Controller, controller } from "./data/controller";
 import { getCollision, getCollisionSide } from "./func/collision";
 import { getKeys, getMouseKeys } from "./func/getKeys";
 import { startGame } from "./func/startGame";
@@ -25,6 +25,7 @@ import { GameObject } from "./class/types/object";
 import { Event } from "./class/types/event";
 import { AudioBus } from "./class/audio/audiobus";
 import { AudioObject } from "./class/types/audio";
+import { Basic } from "./class/types/basic";
 
 declare global {
   interface Window {
@@ -40,6 +41,7 @@ export {
   Sound,
   AudioBus,
   AudioObject,
+  Basic,
   GameObject,
   Camera,
   Font,
